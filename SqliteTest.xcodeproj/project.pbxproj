@@ -12,13 +12,16 @@
 		17F3FE991E9D370A00F30005 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17F3FE971E9D370A00F30005 /* Main.storyboard */; };
 		17F3FE9B1E9D370A00F30005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17F3FE9A1E9D370A00F30005 /* Assets.xcassets */; };
 		17F3FE9E1E9D370A00F30005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17F3FE9C1E9D370A00F30005 /* LaunchScreen.storyboard */; };
-		17F3FEA81E9D3AE300F30005 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEA71E9D3AE300F30005 /* DatabaseManager.swift */; };
+		17F3FEA81E9D3AE300F30005 /* LocateDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEA71E9D3AE300F30005 /* LocateDBManager.swift */; };
 		17F3FEC91E9D47B700F30005 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEBF1E9D47B700F30005 /* FMDatabase.m */; };
 		17F3FECA1E9D47B700F30005 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEC11E9D47B700F30005 /* FMDatabaseAdditions.m */; };
 		17F3FECB1E9D47B700F30005 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEC31E9D47B700F30005 /* FMDatabasePool.m */; };
 		17F3FECC1E9D47B700F30005 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEC51E9D47B700F30005 /* FMDatabaseQueue.m */; };
 		17F3FECD1E9D47B700F30005 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F3FEC81E9D47B700F30005 /* FMResultSet.m */; };
 		17F3FECF1E9D49C300F30005 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F3FECE1E9D49C300F30005 /* libsqlite3.dylib */; };
+		504679071E9DD294007BC585 /* CountryLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504679061E9DD294007BC585 /* CountryLocale.swift */; };
+		5097785A1E9DFE5900F8C2DD /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509778591E9DFE5900F8C2DD /* Util.swift */; };
+		509778601E9E299D00F8C2DD /* location.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 5097785F1E9E0A8C00F8C2DD /* location.sqlite */; };
 		CF3924252802554BAFB65F97 /* Pods_SqliteTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20867B3C5021A0C6EEF08883 /* Pods_SqliteTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +34,7 @@
 		17F3FE9D1E9D370A00F30005 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17F3FE9F1E9D370A00F30005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17F3FEA51E9D3AA400F30005 /* location.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = location.sqlite; path = ../../../Downloads/location.sqlite; sourceTree = "<group>"; };
-		17F3FEA71E9D3AE300F30005 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		17F3FEA71E9D3AE300F30005 /* LocateDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocateDBManager.swift; sourceTree = "<group>"; };
 		17F3FEBD1E9D47B600F30005 /* SqliteTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SqliteTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		17F3FEBE1E9D47B700F30005 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		17F3FEBF1E9D47B700F30005 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -46,6 +49,9 @@
 		17F3FEC81E9D47B700F30005 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		17F3FECE1E9D49C300F30005 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../Downloads/Mach-O-Scope-master/libsqlite3.dylib"; sourceTree = "<group>"; };
 		20867B3C5021A0C6EEF08883 /* Pods_SqliteTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SqliteTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		504679061E9DD294007BC585 /* CountryLocale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryLocale.swift; sourceTree = "<group>"; };
+		509778591E9DFE5900F8C2DD /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		5097785F1E9E0A8C00F8C2DD /* location.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = location.sqlite; sourceTree = "<group>"; };
 		73F4A76D23C47F4853D16937 /* Pods-SqliteTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqliteTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SqliteTest/Pods-SqliteTest.release.xcconfig"; sourceTree = "<group>"; };
 		CDAA6BBB8D1BFD29AC069B41 /* Pods-SqliteTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SqliteTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SqliteTest/Pods-SqliteTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,12 +92,15 @@
 			children = (
 				17F3FEBC1E9D478F00F30005 /* FMDB */,
 				17F3FE931E9D370A00F30005 /* AppDelegate.swift */,
+				509778591E9DFE5900F8C2DD /* Util.swift */,
+				17F3FEA71E9D3AE300F30005 /* LocateDBManager.swift */,
+				504679061E9DD294007BC585 /* CountryLocale.swift */,
 				17F3FE951E9D370A00F30005 /* ViewController.swift */,
-				17F3FE971E9D370A00F30005 /* Main.storyboard */,
 				17F3FE9A1E9D370A00F30005 /* Assets.xcassets */,
+				17F3FE971E9D370A00F30005 /* Main.storyboard */,
 				17F3FE9C1E9D370A00F30005 /* LaunchScreen.storyboard */,
 				17F3FE9F1E9D370A00F30005 /* Info.plist */,
-				17F3FEA71E9D3AE300F30005 /* DatabaseManager.swift */,
+				5097785F1E9E0A8C00F8C2DD /* location.sqlite */,
 			);
 			path = SqliteTest;
 			sourceTree = "<group>";
@@ -198,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				509778601E9E299D00F8C2DD /* location.sqlite in Resources */,
 				17F3FE9E1E9D370A00F30005 /* LaunchScreen.storyboard in Resources */,
 				17F3FE9B1E9D370A00F30005 /* Assets.xcassets in Resources */,
 				17F3FE991E9D370A00F30005 /* Main.storyboard in Resources */,
@@ -263,9 +273,11 @@
 				17F3FECB1E9D47B700F30005 /* FMDatabasePool.m in Sources */,
 				17F3FE941E9D370A00F30005 /* AppDelegate.swift in Sources */,
 				17F3FECC1E9D47B700F30005 /* FMDatabaseQueue.m in Sources */,
-				17F3FEA81E9D3AE300F30005 /* DatabaseManager.swift in Sources */,
+				17F3FEA81E9D3AE300F30005 /* LocateDBManager.swift in Sources */,
 				17F3FEC91E9D47B700F30005 /* FMDatabase.m in Sources */,
 				17F3FECD1E9D47B700F30005 /* FMResultSet.m in Sources */,
+				5097785A1E9DFE5900F8C2DD /* Util.swift in Sources */,
+				504679071E9DD294007BC585 /* CountryLocale.swift in Sources */,
 				17F3FECA1E9D47B700F30005 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +403,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 9257AB8YS3;
 				INFOPLIST_FILE = SqliteTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eros.SqliteTest;
@@ -409,6 +422,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 9257AB8YS3;
 				INFOPLIST_FILE = SqliteTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eros.SqliteTest;
