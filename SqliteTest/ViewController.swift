@@ -8,6 +8,25 @@
 
 import UIKit
 
+extension Array {
+    
+    func filterDuplicates(includeElement: @escaping (_ lhs:Element, _ rhs:Element) -> Bool) -> [Element]{
+        var results = [Element]()
+        
+        forEach { (element) in
+            let existingElements = results.filter {
+                return includeElement(element, $0)
+            }
+            if existingElements.count == 0 {
+                results.append(element)
+            }
+        }
+        
+        return results
+    }
+}
+
+
 class ResultCell: UITableViewCell {
     
     @IBOutlet weak var resultName: UILabel!
@@ -15,70 +34,60 @@ class ResultCell: UITableViewCell {
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate{
     let locateDBManager = LocateDBManager.getInstance()
-
-    var dataArray = [CountryLocale]()
     var filteredArray = [CountryLocale]()
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var resultTableView: UITableView!
     override func viewDidLoad() {
-        dataArray = locateDBManager.getCountryLocales()
         let image = UIImage()
         searchBar.setBackgroundImage(image, for: .any, barMetrics: .default)
         searchBar.scopeBarBackgroundImage = image
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
 //        textFieldInsideSearchBar?.textColor = Config.PRIMARY_FONT_COLOR
         textFieldInsideSearchBar?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
-        
         searchBar.delegate?.searchBar!(searchBar, textDidChange: Locale(identifier: "en_US").regionCode ?? "US")
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        view.addGestureRecognizer(tap)
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
 
     }
     
-    func dismissKeyboard() {
-        view.endEditing(true)
-    }
+//    func dismissKeyboard() {
+//        view.endEditing(true)
+//    }
     
     // MARK: - UISeatchBar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: NSString) {
-        
-        
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
-
-            filteredArray = dataArray.filter({ (locale) -> Bool in
-                let name:NSString = locale.placeName as NSString
-                let code:NSString = locale.stateCode as NSString
-                
-                let range1 = name.range(of: searchText as String, options: .caseInsensitive)
-                let range2 = code.range(of: searchText as String, options: .caseInsensitive)
-                
-                return range1.location != NSNotFound || range2.location != NSNotFound
-            })
+            filteredArray = [CountryLocale]()
+            if Int(searchText) != nil {
+                filteredArray = locateDBManager.searchByPostalCode(keyword: searchText)
+            } else {
+                filteredArray = locateDBManager.searchByNameOrState(keyword: searchText)
+            }
+        }
+        DispatchQueue.main.async {
+            self.resultTableView.reloadData()
         }
         
-        resultTableView.reloadData()
     }
     
     // MARK: - UITableView DataSource
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "ResultCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell") as! ResultCell
         cell.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
 //        cell.textLabel?.textColor = Config.PRIMARY_FONT_COLOR
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        cell.resultName?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
         if filteredArray.count != 0 {
-            cell.textLabel?.text = filteredArray[indexPath.row].placeName
+            cell.resultName?.text = "\(filteredArray[indexPath.row].placeName), \(filteredArray[indexPath.row].stateCode), \(filteredArray[indexPath.row].nationalName)"
         }
         
         return cell
@@ -86,11 +95,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        searchBar.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
+        let cell = tableView.cellForRow(at: indexPath) as! ResultCell
+        searchBar.text = cell.resultName.text
         searchBar.resignFirstResponder()
     }
-    
-    
+   
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         cell.backgroundColor = UIColor.clear

@@ -17,13 +17,12 @@ var dbpath : String {
 class LocateDBManager: NSObject {
     
     var database: FMDatabase? = nil
-    
     var pathToDatabase: String!
     
     let field_PostalCode = "PostalCode"
     let field_PlaceName = "PlaceName"
     let field_StateCode = "StateCode"
-    let national:String = "US"
+    let nation:String = "US"
     
     class func getInstance() -> LocateDBManager
     {
@@ -34,55 +33,69 @@ class LocateDBManager: NSObject {
         return sharedInstance
     }
     
-    func countryName(from countryCode: String) -> String {
+    func nation(from countryCode: String) -> String {
         if let name = (Locale.current as NSLocale).displayName(forKey: .countryCode, value: countryCode) {
-            // Country name was found
             return name
         } else {
-            // Country name cannot be found
             return countryCode
         }
     }
     
-//    func openDatabase() -> Bool {
-//        if database == nil {
-//            if FileManager.default.fileExists(atPath: pathToDatabase) {
-//                database = FMDatabase(path: pathToDatabase)
-//            }
-//        }
-//        
-//        if database != nil {
-//            if database.open() {
-//                return true
-//            }
-//        }
-//        
-//        return false
-//    }
-    
-    func getCountryLocales() -> [CountryLocale]! {
+    func searchByPostalCode(keyword: String) -> [CountryLocale]! {
+        var locales = [CountryLocale]()
         
         sharedInstance.database!.open()
+        let query = "SELECT * FROM Location WHERE Postalcode LIKE ? GROUP BY PlaceName ORDER BY PlaceName"
         
-//        let query = "select * order by PostalCode asc"
-        let results: FMResultSet! = sharedInstance.database!.executeQuery("SELECT * FROM 'Location' ", withArgumentsIn: nil)
-        var locales: [CountryLocale]!
-        if (results != nil) {
+        do {
+            let results = try sharedInstance.database!.executeQuery(query, values: ["\(keyword)%"])
+            
             while results.next() {
                 let locale = CountryLocale(postalCode: Int(results.int(forColumn: field_PostalCode)),
                                            placeName: results.string(forColumn: field_PlaceName),
                                            stateCode: results.string(forColumn: field_StateCode),
-                                           nationalName: countryName(from: national))
-                if locales == nil {
-                    locales = [CountryLocale]()
-                }
+                                           nationalName: nation(from: nation))
+            
+                locales.append(locale)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+        
+        sharedInstance.database!.close()
+        
+        return locales
+    }
+    
+    func searchByNameOrState(keyword: String) -> [CountryLocale]! {
+        var locales = [CountryLocale]()
+        if keyword == nation {
+            return locales
+        }
+        
+        sharedInstance.database!.open()
+        let query = "SELECT * FROM Location WHERE PlaceName LIKE ? OR StateCode LIKE ? GROUP BY PlaceName ORDER BY PlaceName"
+        
+        do {
+            
+            let results = try sharedInstance.database!.executeQuery(query, values: ["\(keyword)%", "\(keyword)%"])
+            
+            while results.next() {
+                let locale = CountryLocale(postalCode: Int(results.int(forColumn: field_PostalCode)),
+                                           placeName: results.string(forColumn: field_PlaceName),
+                                           stateCode: results.string(forColumn: field_StateCode),
+                                           nationalName: nation(from: nation))
                 
                 locales.append(locale)
             }
-            
         }
+        catch {
+            print(error.localizedDescription)
+        }
+        
         sharedInstance.database!.close()
-    
+        
         return locales
     }
 

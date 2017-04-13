@@ -31,7 +31,7 @@ class Util: NSObject {
             
             }
         }else{
-            print(fileExists)
+//            print()
         }
     }
 
